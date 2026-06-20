@@ -1,0 +1,79 @@
+image: mcr.microsoft.com/dotnet/sdk:9.0
+
+stages:
+  - lint
+  - test
+  - coverage
+  - migrate
+  - validate
+  - rollback
+  
+#stage: Commits and Pushes in Branch
+variables:
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+
+checkstyle-csharp:
+  stage: lint
+  script:
+    - dotnet format --verify-no-changes
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+run-unit-tests:
+  stage: test
+  script:
+    - dotnet test CisApi.sln --logger "console;verbosity=detailed"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+enforce-code-coverage:
+  stage: coverage
+  script:
+    - |
+      dotnet tool install -g dotnet-reportgenerator-globaltool
+      export PATH="$PATH:/root/.dotnet/tools"
+      
+      dotnet test CisApi.sln --collect:"XPlat Code Coverage" --results-directory ./TestResults -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude="[*]*.Migrations.*,[*]*.MyDbContextModelSnapshot,[*]CisApi.Src.Infrastructure.IoC.*,[*]*.Extensions.*,[*]*.Dtos.UserDto,[*]CisApi.Src.Infrastructure.Auth.*,[*]*.Mappings.*,[*]*.Context.*"
+      
+      reportgenerator -reports:"./TestResults/**/*.xml" -targetdir:"./CoverageReport" -reporttypes:"Cobertura;TextSummary"
+      
+      cat ./CoverageReport/Summary.txt
+      
+      awk -F': ' '
+        /Line coverage:/ { lc = $2; gsub("%", "", lc) }
+        /Branch coverage:/ { bc = $2; split($2, a, "%"); bc = a[1] }
+        END {
+          print "Metrics -> Lines: " lc "%, Branches: " bc "%";
+          if (lc + 0 < 80.0) { print "Failed! Line coverage < 80%"; exit 1 }
+          if (bc + 0 < 70.0) { print "Failed! Branch coverage < 70%"; exit 1 }
+          print "Success! Thresholds met."
+        }
+      ' ./CoverageReport/Summary.txt
+  coverage: '/Line coverage:\s*(\d+\.\d+)%/'
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+# Stage: Migration and Rollback
+run_data_migration:
+  stage: migrate
+  script:
+    - bash scripts/migrate-to-mongo.sh
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+validate_data_integrity:
+  stage: validate
+  needs: [run_data_migration]
+  script:
+    - bash scripts/validate-migration.sh
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+emergency_rollback:
+  stage: rollback
+  script:
+    - echo " Fault detected! Activating security network..."
+    - bash scripts/rollback-to-mysql.sh
+  when: on_failure
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\MySQL\CisApi.Src.Infrastructure.MySQL.csproj" />
+    <ProjectReference Include="..\Auth\CisApi.Src.Infrastructure.Auth.csproj" />
+    <ProjectReference Include="..\Http\CisApi.Src.Infrastructure.Http.csproj" />
+    <ProjectReference Include="..\..\Core\Application\CisApi.Src.Core.Application.csproj" />
+    <ProjectReference Include="..\..\Presentation\RestApi\CisApi.Src.Presentation.RestApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

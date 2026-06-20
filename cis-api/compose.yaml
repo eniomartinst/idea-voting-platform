@@ -1,0 +1,50 @@
+services:
+  # CIS API service (ASP.NET Core)
+  cis-api:
+    # Connects the service to the shared Docker network
+    # so it can communicate with mysql-db and other APIs
+    networks:
+      - cis-network
+
+    # Build configuration for the CIS API container
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: cis-api
+
+    # Exposes the API on host machine
+    ports:
+      - "8005:8005"
+
+    # Environment variables used by ASP.NET Core
+    # This connects the API to the shared MySQL container via Docker DNS
+    environment:
+      DatabaseConfig__Provider: "MongoDB"
+      ConnectionStrings__CISDB: "server=mysql-db;port=3306;database=sd3db;user=root;password=root"
+      ConnectionStrings__MongoDB: "mongodb://mongodb:27017"
+
+  # MongoDB service removed from this compose file
+  # The CIS API now relies on a shared MongoDB container (mongodb_ds3)
+  # running in the same external network (cis-network).
+  # This avoids multiple Mongo instances and ensures both APIs
+  # use the same server with isolated databases (sd3_cis_db, sd3_users_db).
+#  mongo-db:
+#    image: mongo:latest
+#    container_name: mongo-db
+#    ports:
+#      - "27017:27017"
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: root
+#    networks:
+#      - cis-network
+#    volumes:
+#      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+# Shared external Docker network
+# Must be created manually before running containers:
+# docker network create cis-network
+networks:
+  cis-network:
+    external: true

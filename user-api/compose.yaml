@@ -1,0 +1,69 @@
+services:
+  # Spring Boot API service
+  users-api:
+    build: . # builds the image from the Dockerfile
+    container_name: users-api
+    restart: always
+    ports:
+      - "8001:8001" # host:container port mapping
+    depends_on:
+      mysql-db: # ensures database starts before the API
+        condition: service_healthy
+      mongodb: # waits for MongoDB to be ready
+        condition: service_started
+    environment:
+      # environment variables used by Spring Boot to connect to the shared database
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/sd3db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      # MongoDB configuration (users-api uses sd3_users_db)
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/sd3_users_db
+    networks:
+      - cis-network
+
+  # Shared MySQL Database service (Maintained for backward compatibility)
+  mysql-db:
+    image: mysql:8.0 # official MySQL image
+    container_name: mysql-db
+    restart: always # automatically restarts if the container stops
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sd3db # creates the database automatically
+    ports:
+      - "3306:3306" # default MySQL port
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - cis-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Shared MongoDB Database service (New NoSQL implementation)
+  mongodb:
+    image: mongo:latest # official MongoDB image
+    container_name: mongodb_ds3
+    restart: always
+    environment:
+      # Creates the initial database for the Users API
+      MONGO_INITDB_DATABASE: sd3_users_db
+    ports:
+      - "27017:27017" # default MongoDB port
+    volumes:
+      # Persistent storage to avoid data loss when container stops
+      - mongo_data:/data/db
+    networks:
+      # Must be on the same network to share connections with CIS API
+      - cis-network
+
+# Shared external Docker network
+# Must be created manually before running containers:
+# docker network create cis-network
+networks:
+  cis-network:
+    external: true
+
+# Named volumes for persistent database storage
+volumes:
+  mongo_data: # Volume for MongoDB

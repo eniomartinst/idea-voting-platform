@@ -1,0 +1,65 @@
+image: maven:3.9.9-eclipse-temurin-21
+
+stages:
+  - verify
+  - migrate
+  - validate
+  - rollback
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+cache:
+  paths:
+    - .m2/repository/
+
+#stage: Commits and Pushes in Branch
+verify_feature_branch:
+  stage: verify
+  script:
+    - mvn clean checkstyle:check test -Dtest=!UsersApiApplicationTests
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH'
+
+# 2. Pipeline para Merge Request (Checkstyle + Testes + Cobertura JaCoCo)
+verify_merge_request:
+  stage: verify
+  script:
+    - mvn clean checkstyle:check test jacoco:report jacoco:check -Dtest=!UsersApiApplicationTests
+  artifacts:
+    when: always
+    paths:
+      - target/site/jacoco/
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: target/site/jacoco/jacoco.xml
+  coverage: '/Total.*?([0-9]{1,3})%/'
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+
+# Stage: Migration and Rollback
+run_data_migration:
+  stage: migrate
+  script:
+    - bash scripts/migrate-to-mongo.sh
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+validate_data_integrity:
+  stage: validate
+  needs: [run_data_migration]
+  script:
+    - bash scripts/validate-migration.sh
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+emergency_rollback:
+  stage: rollback
+  script:
+    - echo " Fault detected! Activating security network..."
+    - bash scripts/rollback-to-mysql.sh
+  when: on_failure
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
