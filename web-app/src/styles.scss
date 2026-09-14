@@ -1,0 +1,26 @@
+:root {
+  // Cores Base (Branco e Preto)
+  --color-black: #1a1a1a;
+  --color-white: #ffffff;
+  --color-bg-light: #f4f6f9; // Um branco meio gelo/acinzentado para o fundo
+  
+  // Identidade Visual (Tons de Azul)
+  --color-primary: #0056b3;       // Azul forte principal
+  --color-primary-light: #3385ff; // Azul mais vivo para destaques
+  --color-primary-dark: #003d82;  // Azul escuro para efeitos de hover
+  
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-bg-light);
+  color: var(--color-black);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+}
