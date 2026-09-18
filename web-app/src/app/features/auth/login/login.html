@@ -6,18 +6,20 @@
     </div>
     <p class="subtitle">Faça login para compartilhar e votar em ideias.</p>
 
-    <form class="login-form">
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="email">E-mail</label>
-        <input type="email" id="email" placeholder="seu@email.com" required>
+        <!-- Trocamos o id por formControlName -->
+        <input type="email" formControlName="email" placeholder="seu@email.com">
       </div>
 
       <div class="form-group">
         <label for="password">Senha</label>
-        <input type="password" id="password" placeholder="••••••••" required>
+        <input type="password" formControlName="password" placeholder="••••••••">
       </div>
 
-      <button type="submit" class="btn-primary">Entrar</button>
+      <!-- Desabilitamos o botão se o formulário for inválido -->
+      <button type="submit" class="btn-primary" [disabled]="loginForm.invalid">Entrar</button>
     </form>
 
     <p class="register-link">
