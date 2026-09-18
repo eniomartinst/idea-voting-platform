@@ -6,23 +6,23 @@
     </div>
     <p class="subtitle">Crie sua conta e participe da comunidade.</p>
 
-    <form class="register-form">
+    <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="name">Nome Completo</label>
-        <input type="text" id="name" placeholder="Seu nome" required>
+        <input type="text" formControlName="name" placeholder="Seu nome">
       </div>
 
       <div class="form-group">
         <label for="email">E-mail</label>
-        <input type="email" id="email" placeholder="seu@email.com" required>
+        <input type="email" formControlName="email" placeholder="seu@email.com">
       </div>
 
       <div class="form-group">
         <label for="password">Senha</label>
-        <input type="password" id="password" placeholder="••••••••" required>
+        <input type="password" formControlName="password" placeholder="••••••••">
       </div>
 
-      <button type="submit" class="btn-primary">Cadastrar</button>
+      <button type="submit" class="btn-primary" [disabled]="registerForm.invalid">Cadastrar</button>
     </form>
 
     <p class="login-link">
