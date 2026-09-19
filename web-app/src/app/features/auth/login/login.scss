@@ -3,7 +3,13 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: var(--color-bg-light);
+  
+  /* Imagem de fundo com um overlay escuro para dar contraste ao card branco */
+  background-image: linear-gradient(rgba(10, 15, 30, 0.75), rgba(10, 15, 30, 0.85)), url('/bg-ideas.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .login-card {
