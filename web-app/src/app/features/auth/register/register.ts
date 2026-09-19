@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../../core/services/auth.service';
+import { Auth } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +15,7 @@ export class Register {
 
   constructor(
     private fb: FormBuilder, 
-    private authService: AuthService,
+    private authService: Auth,
     private router: Router
   ) {
     this.registerForm = this.fb.group({
@@ -27,12 +27,12 @@ export class Register {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      this.authService.register(this.registerForm.value).subscribe({
-        next: () => {
+      (this.authService as any).register(this.registerForm.value).subscribe({
+        next: (response: any) => { 
           alert('Conta criada com sucesso!');
           this.router.navigate(['/login']);
         },
-        error: (err) => {
+        error: (err: any) => { 
           console.error('Erro no registro', err);
           alert('Erro ao criar conta.');
         }
