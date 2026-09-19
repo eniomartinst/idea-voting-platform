@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IdeaService } from '../../../core/services/idea.service';
+import {IdeaService } from '../../../core/services/idea';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,15 +20,14 @@ export class Dashboard implements OnInit {
 
   loadIdeas() {
     this.ideaService.getIdeas().subscribe({
-      next: (data) => this.ideas = data,
-      error: (err) => console.error('Erro ao carregar ideias', err)
+      error: (err: any) => console.error('Erro ao carregar ideias', err) 
     });
   }
 
   vote(ideaId: string) {
     this.ideaService.vote(ideaId).subscribe({
-      next: () => this.loadIdeas(), // Atualiza a lista após votar
-      error: (err) => console.error('Erro ao registrar voto', err)
+      next: (response: any) => this.loadIdeas(), 
+      error: (err: any) => console.error('Erro ao registrar voto', err) 
     });
   }
 }
