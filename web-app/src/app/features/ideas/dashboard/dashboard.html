@@ -1,1 +1,25 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h2>Ideias da Comunidade</h2>
+    <button class="btn-new-idea">+ Nova Ideia</button>
+  </div>
+
+  <div class="ideas-grid">
+    <!-- Renderiza um card para cada ideia retornada do backend -->
+    <div class="idea-card" *ngFor="let idea of ideas">
+      <div class="idea-content">
+        <!-- Usa o título retornado ou um texto padrão -->
+        <h3>{{ idea.title || 'Título da Ideia' }}</h3>
+        <p>{{ idea.description || 'Descrição detalhada da proposta enviada para a plataforma...' }}</p>
+      </div>
+      <div class="idea-actions">
+        <span class="vote-count">{{ idea.votes || 0 }} Votos</span>
+        <button class="btn-vote" (click)="vote(idea.id)">👍 Votar</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="empty-state" *ngIf="ideas.length === 0">
+    <p>Nenhuma ideia cadastrada ainda. Seja o primeiro a contribuir!</p>
+  </div>
+</div>
