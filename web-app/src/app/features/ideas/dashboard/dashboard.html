@@ -1,25 +1,40 @@
 <div class="dashboard-container">
   <div class="dashboard-header">
-    <h2>Ideias da Comunidade</h2>
-    <button class="btn-new-idea">+ Nova Ideia</button>
+    <h2>Tópicos de Discussão</h2>
+    <button class="btn-new-topic" (click)="toggleCreateForm()">
+      {{ showCreateForm ? 'Cancelar' : '+ Novo Tópico' }}
+    </button>
   </div>
 
-  <div class="ideas-grid">
-    <!-- Renderiza um card para cada ideia retornada do backend -->
-    <div class="idea-card" *ngFor="let idea of ideas">
-      <div class="idea-content">
-        <!-- Usa o título retornado ou um texto padrão -->
-        <h3>{{ idea.title || 'Título da Ideia' }}</h3>
-        <p>{{ idea.description || 'Descrição detalhada da proposta enviada para a plataforma...' }}</p>
+  <div class="create-topic-panel" *ngIf="showCreateForm">
+    <h3>Criar Novo Tópico</h3>
+    <form [formGroup]="topicForm" (ngSubmit)="onSubmitTopic()" class="topic-form">
+      <div class="form-group">
+        <label for="title">Título</label>
+        <input type="text" id="title" formControlName="title" placeholder="Ex: Melhorias de Infraestrutura">
       </div>
-      <div class="idea-actions">
-        <span class="vote-count">{{ idea.votes || 0 }} Votos</span>
-        <button class="btn-vote" (click)="vote(idea.id)">👍 Votar</button>
+      <div class="form-group">
+        <label for="description">Descrição</label>
+        <textarea id="description" formControlName="description" rows="3" placeholder="Qual o contexto dessa discussão?"></textarea>
+      </div>
+      <button type="submit" class="btn-submit" [disabled]="topicForm.invalid">Publicar Tópico</button>
+    </form>
+  </div>
+
+  <div class="topics-grid">
+    <div class="topic-card" *ngFor="let topic of topics" [routerLink]="['/topico', topic.id]">
+      <div class="topic-content">
+        <h3>{{ topic.title }}</h3>
+        <p>{{ topic.description }}</p>
+      </div>
+      <div class="topic-footer">
+        <span class="idea-count">💡 {{ topic.totalIdeasCount }} Ideias</span>
+        <span class="author">por {{ topic.createdBy?.name || 'Usuário' }}</span>
       </div>
     </div>
   </div>
   
-  <div class="empty-state" *ngIf="ideas.length === 0">
-    <p>Nenhuma ideia cadastrada ainda. Seja o primeiro a contribuir!</p>
+  <div class="empty-state" *ngIf="topics.length === 0 && !showCreateForm">
+    <p>Nenhum tópico criado ainda. Inicie a primeira discussão!</p>
   </div>
 </div>
