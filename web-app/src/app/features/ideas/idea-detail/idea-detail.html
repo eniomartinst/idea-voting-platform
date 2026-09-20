@@ -1,1 +1,40 @@
-<p>idea-detail works!</p>
+<div class="topic-detail-container">
+  <div class="header-actions">
+    <a routerLink="/dashboard" class="btn-back">← Voltar aos Tópicos</a>
+  </div>
+
+  <!-- Formulário para submeter uma nova ideia -->
+  <div class="create-idea-panel">
+    <h3>Contribuir com uma Ideia</h3>
+    <form [formGroup]="ideaForm" (ngSubmit)="onSubmitIdea()" class="idea-form">
+      <div class="form-group">
+        <textarea formControlName="content" rows="3" placeholder="Descreva sua ideia ou solução para este tópico..."></textarea>
+      </div>
+      <button type="submit" class="btn-submit" [disabled]="ideaForm.invalid">Enviar Ideia</button>
+    </form>
+  </div>
+
+  <!-- Lista de Ideias Submetidas -->
+  <div class="ideas-list">
+    <div class="idea-card" *ngFor="let idea of ideas">
+      <div class="idea-header">
+        <span class="author">Por: {{ idea.createdBy?.name || 'Usuário' }}</span>
+        <span class="date">{{ idea.createdAt | date:'short' }}</span>
+      </div>
+      
+      <div class="idea-content">
+        <p>{{ idea.content }}</p>
+      </div>
+      
+      <div class="idea-actions">
+        <span class="vote-count">{{ idea.votesCount }} Votos</span>
+        <button class="btn-vote" (click)="vote(idea.id)">👍 Votar</button>
+      </div>
+    </div>
+
+    <!-- Feedback quando o tópico está vazio -->
+    <div class="empty-state" *ngIf="ideas.length === 0">
+      <p>Nenhuma ideia submetida ainda. Seja o primeiro a contribuir!</p>
+    </div>
+  </div>
+</div>
