@@ -1,33 +1,57 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {IdeaService } from '../../../core/services/idea';
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TopicService } from '../../../core/services/topic';
+import { TopicResponseDto } from '../../../core/models/api.models';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
 export class Dashboard implements OnInit {
-  ideas: any[] = [];
+  topics: TopicResponseDto[] = [];
+  topicForm: FormGroup;
+  showCreateForm = false;
 
-  constructor(private ideaService: IdeaService) {}
+  constructor(
+    private topicService: TopicService,
+    private fb: FormBuilder
+  ) {
+    this.topicForm = this.fb.group({
+      title: ['', [Validators.required, Validators.minLength(5)]],
+      description: ['', [Validators.required, Validators.minLength(10)]]
+    });
+  }
 
   ngOnInit(): void {
-    this.loadIdeas();
+    this.loadTopics();
   }
 
-  loadIdeas() {
-    this.ideaService.getIdeas().subscribe({
-      error: (err: any) => console.error('Erro ao carregar ideias', err) 
+  loadTopics(): void {
+    this.topicService.getTopics().subscribe({
+      next: (data: TopicResponseDto[]) => this.topics = data,
+      error: (err: any) => console.error('Erro ao carregar tópicos', err)
     });
   }
 
-  vote(ideaId: string) {
-    this.ideaService.vote(ideaId).subscribe({
-      next: (response: any) => this.loadIdeas(), 
-      error: (err: any) => console.error('Erro ao registrar voto', err) 
-    });
+  toggleCreateForm(): void {
+    this.showCreateForm = !this.showCreateForm;
+    if (!this.showCreateForm) this.topicForm.reset();
+  }
+
+  onSubmitTopic(): void {
+    if (this.topicForm.valid) {
+      this.topicService.createTopic(this.topicForm.value).subscribe({
+        next: () => {
+          this.loadTopics();
+          this.toggleCreateForm();
+        },
+        error: (err: any) => console.error('Erro ao criar tópico', err)
+      });
+    }
   }
 }
