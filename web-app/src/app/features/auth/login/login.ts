@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Auth } from '../../../core/services/auth'; 
+import { AuthService } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,7 @@ export class Login {
 
   constructor(
     private fb: FormBuilder, 
-    private authService: Auth, 
+    private authService: AuthService, 
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -26,11 +26,14 @@ export class Login {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      (this.authService as Auth & { login: (credentials: unknown) => any }).login(this.loginForm.value).subscribe({
-        next: (response: any) => { 
+      this.authService.login(this.loginForm.value).subscribe({
+        next: (response: any) => {
+          if (response.token) {
+            this.authService.saveToken(response.token);
+          }
           this.router.navigate(['/dashboard']);
         },
-        error: (err: any) => { 
+        error: (err: any) => {
           console.error('Erro no login', err);
           alert('Falha ao fazer login. Verifique suas credenciais.');
         }
