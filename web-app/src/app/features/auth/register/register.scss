@@ -97,6 +97,12 @@
     &:active {
       transform: translateY(1px);
     }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
   }
 }
 
