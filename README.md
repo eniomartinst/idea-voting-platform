@@ -1,18 +1,19 @@
 # 💡 Idea Voting Platform (Monorepo)
 
-> **A highly resilient, distributed backend ecosystem for Crowdsourced Ideation, featuring polyglot microservices, Clean Architecture, runtime database provider toggling, and automated NoSQL data migration.**
+> **A highly resilient, distributed backend ecosystem and modern web application for Crowdsourced Ideation, featuring polyglot microservices, Clean Architecture, runtime database provider toggling, and automated NoSQL data migration.**
 
 ---
 
 ## 🛠️ Technology Stack
 
-The ecosystem is distributed across polyglot microservices that integrate seamlessly via an internal Docker network:
+The ecosystem is distributed across polyglot microservices and a responsive single-page web frontend:
 
+* **Frontend Web Application:** Angular (Standalone Components), TypeScript, RxJS, Reactive Forms, SCSS (Custom High-Contrast UI).
 * **Identity Service (Users API):** Java 21, Spring Boot 3, Spring Security, Maven, JUnit 5, JaCoCo.
 * **Core Ideation Service (CIS API):** C#, .NET 9, ASP.NET Core Web API, Entity Framework Core, MongoDB Driver, xUnit, Moq, Coverlet.
 * **Persistence Layers:** MySQL 8 (Relational) & MongoDB (NoSQL).
 * **Infrastructure & Automation:** Docker & Docker Compose, Python 3 (ETL Migration Scripts).
-* **Security:** Stateless JWT Authentication.
+* **Security:** Stateless JWT Authentication with automated Angular HttpInterceptors.
 
 ---
 
@@ -20,6 +21,10 @@ The ecosystem is distributed across polyglot microservices that integrate seamle
 
 ```text
 idea-voting-platform/
+│
+├── web-app/                 # Frontend Web Application (Angular)
+│   ├── src/app/core/        # HTTP Services, JWT Interceptors, and strict DTO Models
+│   └── src/app/features/    # Standalone UI Components (Auth, Dashboard, Idea Details)
 │
 ├── cis-api/                 # Core Ideation REST API (.NET 9)
 │   ├── src/                 # Clean Architecture Layers (Core, Infra, Presentation)
@@ -37,17 +42,21 @@ idea-voting-platform/
 
 ## 🧱 Architecture Overview
 
-Both APIs strictly adhere to the separation of concerns principle through layered architectures, completely isolating core business rules from infrastructure and database implementations:
+Both APIs strictly adhere to the separation of concerns principle through layered architectures, while the frontend consumes them via strongly typed models:
+
+### Web App Structure (Angular)
+* **Features:** Modular, standalone components separated by business domains (`auth`, `ideas`). Features reactive forms and isolated state management.
+* **Core:** Centralized HTTP communication mapped exactly to backend DTOs. Secures routes via a functional HTTP Interceptor, automatically injecting the JWT token into every outgoing request to protected APIs.
 
 ### CIS API Structure (C#)
-* **Core:** Contains the *Domain* (Entities and Contracts) and *Application* (Use Cases and Services) layers, fully pure and framework-agnostic.
-* **Infrastructure:** Implementations for authentication, HTTP adapters, Inversion of Control (IoC), MySQL (EF Core), and MongoDB repositories.
+* **Core:** Contains the *Domain* (Entities and Contracts) and *Application* (Use Cases and Services) layers following the CQRS pattern, fully pure and framework-agnostic.
+* **Infrastructure:** Implementations for HTTP adapters, Inversion of Control (IoC), MySQL (EF Core), and MongoDB repositories.
 * **Presentation (RestApi):** RESTful Controllers that expose and consume data via DTOs.
 
 ### Users API Structure (Java)
-* **Core:** Contains the domain and application services (`core/domain`, `core/application`), defining abstract repository contracts.
-* **Infrastructure:** Concrete persistence implementations (`infrastructure/mysql`, `infrastructure/mongodb`) and JWT security (`infrastructure/security`).
-* **Presentation:** Controllers (`presentation/controllers`), object mappers (`presentation/mappers`), and global exception handling.
+* **Core:** Contains the domain and application services, defining abstract repository contracts.
+* **Infrastructure:** Concrete persistence implementations and JWT security logic.
+* **Presentation:** Controllers, object mappers, and global exception handling.
 
 ---
 
@@ -56,19 +65,13 @@ Both APIs strictly adhere to the separation of concerns principle through layere
 A major architectural highlight of this ecosystem is the ability to seamlessly switch database engines (**MySQL <-> MongoDB**) via configuration files, without modifying a single line of business logic.
 
 ### 1. Users API Configuration (Java)
-Switching is handled via **Spring Profiles** in the `users-api/src/main/resources/application.properties` file. Change the following property:
-
+Switching is handled via **Spring Profiles** in the `users-api/src/main/resources/application.properties` file:
 ```properties
-# To use MongoDB:
-spring.profiles.active=mongodb
-
-# To use MySQL:
-spring.profiles.active=mysql
+spring.profiles.active=mongodb # Or 'mysql'
 ```
 
 ### 2. CIS API Configuration (C#)
-Switching is handled via environment variables or JSON structure in the .NET configuration file (`appsettings.json`):
-
+Switching is handled via environment variables or JSON structure in `appsettings.json`:
 ```json
 {
   "DatabaseConfig": {
@@ -77,8 +80,6 @@ Switching is handled via environment variables or JSON structure in the .NET con
 }
 ```
 
-*Note: Switching providers requires restarting the containers/services to correctly inject the corresponding dependencies.*
-
 ---
 
 ## 🐳 Environment & Infrastructure (Docker)
@@ -86,98 +87,88 @@ Switching is handled via environment variables or JSON structure in the .NET con
 Microservices communicate using internal DNS service names within an isolated network.
 
 ### 🌐 Shared Network Creation
-The Docker virtual network must exist prior to spinning up the ecosystem. Ensure it is created by running:
-
+The Docker virtual network must exist prior to spinning up the ecosystem:
 ```bash
 docker network create cis-network
 ```
 
 ### 🚀 Starting the Ecosystem
-To build the custom images and start the entire physical infrastructure (APIs and Databases) in the background:
-
+To build the custom images and start the physical infrastructure (APIs and Databases) in the background:
 ```bash
 docker compose up --build -d
 ```
 
 ### 🗄️ Database Mapping Strategy
-
-* **Legacy MySQL:** Shared network instance. Single database created: `sd3db` (Used by both `users-api` and `cis-api` via specific tables).
-* **Modernized MongoDB:** Shared instance with logical database separation per service:
-    * `sd3_users_db` -> Exclusive to Users API.
-    * `sd3_cis_db` -> Exclusive to CIS API.
+* **Legacy MySQL:** Shared network instance (`sd3db`).
+* **Modernized MongoDB:** Shared instance with logical database separation per service (`sd3_users_db` and `sd3_cis_db`).
 
 ---
 
 ## 🌐 Unified API Endpoints Matrix
 
 ### 👥 Users API (Identity Provider) - Local Port: `8001`
-
-| Method | Endpoint | Description | Status |
-| :--- | :--- | :--- | :--- |
-| **GET** | `/api/v1/health` | API health check and integrity validation | Implemented |
-| **POST** | `/api/v1/auth/login` | Credential authentication and JWT Token generation | Implemented |
-| **POST** | `/api/v1/users` | Register new platform users | Implemented |
-| **GET** | `/api/v1/users` | Complete list of registered users | Implemented |
-| **GET** | `/api/v1/users/{id}` | Retrieve specific user profile by ID | Implemented |
-| **PATCH**| `/api/v1/users/{id}` | Partial user data update (name, password) | Implemented |
-| **DELETE**| `/api/v1/users/{id}` | Logical/physical user account removal | Implemented |
+* `POST /api/v1/auth/login` - Authenticate and generate JWT
+* `POST /api/v1/users` - Register new platform users
+* *(Standard GET, PATCH, DELETE operations for user management)*
 
 ### 💡 CIS API (Core Ideation & Voting) - Local Port: `8005`
-
-| Method | Endpoint | Description | Status |
-| :--- | :--- | :--- | :--- |
-| **POST** | `/api/v1/topics` | Create new general discussion topics | Implemented |
-| **GET** | `/api/v1/topics` | List and retrieve active topics | Implemented |
-| **POST** | `/api/v1/topics/{topicId}/ideas` | Submit new ideas associated with a topic | Implemented |
-| **GET** | `/api/v1/topics/{topicId}/ideas` | List ideas linked to a specific topic | Implemented |
-| **POST** | `/api/v1/ideas/{ideaId}/vote` | Register a single vote on a specific idea (Upvote) | Implemented |
-| **POST** | `/api/v1/ideas/{ideaId}/unvote` | Withdraw/cancel a previously cast vote | Implemented |
+* `POST & GET /api/v1/topics` - Manage discussion topics
+* `POST & GET /api/v1/topics/{topicId}/ideas` - Manage ideas linked to specific topics
+* `POST /api/v1/ideas/{ideaId}/vote` - Register an upvote
+* `POST /api/v1/ideas/{ideaId}/unvote` - Withdraw a vote
 
 ---
 
 ## 🔐 Cross-Service Authentication Flow
-1. The client consumes the `POST :8001/api/v1/auth/login` endpoint sending credentials.
+1. The Angular client submits credentials to `POST :8001/api/v1/auth/login`.
 2. The **Users API** validates and responds with a cryptographic JWT token.
-3. To consume the protected routes of the **CIS API (:8005)**, the client must inject the token into the HTTP request headers using the Bearer authentication format:
-    * **Key:** `Authorization`
-    * **Value:** `Bearer <your_jwt_token>`
+3. The Angular `authInterceptor` captures this token from `localStorage` and securely injects it as a `Bearer` header into all subsequent requests targeting the **CIS API (:8005)**.
 
 ---
 
 ## 🔄 Data Migration Strategy (Python ETL)
+Legacy data residing in MySQL can be seamlessly migrated to MongoDB using the Python ETL scripts:
+1. **Extract:** Optimized cursor-based reading from MySQL.
+2. **Transform:** Structural conversion from relational to NoSQL document formats.
+3. **Load:** Organized batch insertion using Upsert operations, making the scripts completely **Idempotent**.
 
-When switching API providers to MongoDB, legacy data residing in MySQL must be migrated. The project features Python-based scripts structured under the **ETL** engineering pattern:
+---
 
-1.  **Extract:** Optimized cursor-based reading of relational rows from MySQL.
-2.  **Transform:** Dynamic structural conversion from tabular relational data to NoSQL document formats (Dictionaries/JSON), remapping foreign keys and preserving referential integrity through global identifiers (`userId`, `topicId`, `ideaId`).
-3.  **Load:** Organized batch insertion (*Batch Size: 100*) using **Upsert** operations, making the scripts completely **Idempotent** (they can be re-executed without the risk of duplicating data).
-
-The scripts fully support simulations (`--dry-run`) and automated post-migration mathematical checks (`--validate`), comparing the total row count from the source database with the amount of documents generated in MongoDB.
+## 👥 Core Team & Contributors
+This ecosystem is architected, developed, and maintained by:
+* **Ênio Martins** - Full Stack Development & Architecture
+* **Arthur Pereira** - Backend & Integration
+* **Christopher Allan** - Backend Engineering
+* **Davi** - Core System Architecture
+* **Marcos La Santrer** - Database & Data Flow
+* **Pedro** - Infrastructure & DevOps
+* **Vinicius** - Security Implementation
 
 ---
 
 ## 🧪 Useful Commands & Testing
 
-### Run Unit Tests (Java / Maven)
+**Start Angular Frontend:**
+```bash
+cd web-app
+ng serve -o
+```
+
+**Run Unit Tests (Java / Maven):**
 ```bash
 cd users-api
 mvn test
 ```
 
-### Run Unit Tests and Coverage (.NET / C#)
+**Run Unit Tests and Coverage (.NET / C#):**
 ```bash
 cd cis-api
 dotnet test
 ```
 
-### Direct CLI Inspection inside Containers
+## 👨‍💻 Autor
 
-**MySQL Console Access:**
-```bash
-docker exec -it mysql-db mysql -u root -p'root' sd3db
-```
+**Ênio Martins**
+*Full Stack Developer*
 
-**MongoDB Shell (Mongosh) Access:**
-```bash
-docker exec -it mongodb_ds3 mongosh sd3_cis_db
-```
+* [GitHub](https://github.com/eniomartinst)
