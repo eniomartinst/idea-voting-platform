@@ -1,6 +1,6 @@
 # Users API (Java + Spring Boot)
 
-## 📌 Description
+## Description
 
 This project provides a **Users API** built with **Java and Spring Boot**, following **Clean Architecture** principles and best practices.
 
@@ -10,7 +10,7 @@ The goal is to maintain a standardized, scalable architecture, ensuring separati
 
 ---
 
-## 🚀 Technologies
+## Technologies
 
 - Java 21
 - Spring Boot 3
@@ -22,7 +22,7 @@ The goal is to maintain a standardized, scalable architecture, ensuring separati
 
 ---
 
-## 🧱 Architecture Overview
+## Architecture Overview
 
 The project follows a strict layered architecture, enabling the implementation of multiple database infrastructures without affecting domain rules:
 
@@ -43,7 +43,7 @@ The project follows a strict layered architecture, enabling the implementation o
 
 ---
 
-## 🗄️ Database Strategy & Toggling (MySQL vs MongoDB)
+## Database Strategy & Toggling (MySQL vs MongoDB)
 
 A key architectural feature of this API is its ability to switch between a Relational Database (MySQL) and a Document Database (MongoDB) seamlessly, utilizing **Spring Profiles** and **Dependency Injection**.
 
@@ -65,17 +65,17 @@ spring.profiles.active=mysql
 
 ---
 
-## 🐳 Docker & Environment Setup
+## Docker & Environment Setup
 
 The project uses **Docker** to facilitate the setup of the API and both databases.
 
-### 🌐 Shared Docker Network
+### Shared Docker Network
 This API shares a Docker network with the CIS API to allow secure internal communication.
 Ensure the network exists before running the containers:
 
     docker network create cis-network
 
-### 🚀 Running the Project
+### Running the Project
 
 First execution (builds the image):
 docker compose up --build
@@ -90,7 +90,7 @@ The application will be available at: `http://localhost:8001`
 
 ---
 
-## 🌐 API Endpoints
+## API Endpoints
 
 ### Health
 | Method | Endpoint | Description | Status |
@@ -113,7 +113,7 @@ The application will be available at: `http://localhost:8001`
 
 ---
 
-## 🧪 Testing the API
+## Testing the API
 
 ### Authentication Workflow (Postman)
 1. Send a `POST` request to `/api/v1/auth/login` with your credentials (`login` and `password`).
@@ -124,7 +124,7 @@ The application will be available at: `http://localhost:8001`
 
 ---
 
-## 📌 Current Project Status
+## Current Project Status
 
 - [x] Clean Architecture implemented
 - [x] Docker & `cis-network` integration
