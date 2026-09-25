@@ -1,4 +1,4 @@
-package jalau.usersapi;
+package com.ideavoting.usersapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
