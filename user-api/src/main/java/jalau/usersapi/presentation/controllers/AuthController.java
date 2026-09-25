@@ -1,11 +1,11 @@
-package jalau.usersapi.presentation.controllers;
+package com.ideavoting.usersapi.presentation.controllers;
 
 import jakarta.validation.Valid;
-import jalau.usersapi.core.domain.entities.Token;
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.core.domain.services.IAuthService;
-import jalau.usersapi.presentation.dtos.LoginRequest;
-import jalau.usersapi.presentation.dtos.LoginResponse;
+import com.ideavoting.usersapi.core.domain.entities.Token;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.core.domain.services.IAuthService;
+import com.ideavoting.usersapi.presentation.dtos.LoginRequest;
+import com.ideavoting.usersapi.presentation.dtos.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
