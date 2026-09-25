@@ -9,22 +9,22 @@
   This mapper defines SQL queries to interact with the "users" table,
   mapping results to UserJpaEntity objects.
 -->
-<mapper namespace="jalau.usersapi.infrastructure.mysql.mybatis.UserMyBatisMapper">
+<mapper namespace="com.ideavoting.usersapi.infrastructure.mysql.mybatis.UserMyBatisMapper">
 
   <!-- Retrieves all users from the database. -->
-  <select id="findAllUsers" resultType="jalau.usersapi.infrastructure.mysql.entities.UserJpaEntity">
+  <select id="findAllUsers" resultType="com.ideavoting.usersapi.infrastructure.mysql.entities.UserJpaEntity">
     SELECT id, name, login, password
     FROM users
   </select>
 
   <!-- Create a user in database. -->
-  <insert id="createUser" parameterType="jalau.usersapi.infrastructure.mysql.entities.UserJpaEntity">
+  <insert id="createUser" parameterType="com.ideavoting.usersapi.infrastructure.mysql.entities.UserJpaEntity">
     INSERT INTO users (id, name, login, password)
     VALUES (#{id}, #{name}, #{login}, #{password})
   </insert>
 
   <!-- Retrieves a user by id from the database. -->
-  <select id="getUserById" resultType="jalau.usersapi.infrastructure.mysql.entities.UserJpaEntity">
+  <select id="getUserById" resultType="com.ideavoting.usersapi.infrastructure.mysql.entities.UserJpaEntity">
     SELECT id, name, login, password
     FROM users
     WHERE id = #{id}
@@ -37,7 +37,7 @@
     WHERE id = #{id}
   </delete>
 
-  <update id="updateUser" parameterType="jalau.usersapi.infrastructure.mysql.entities.UserJpaEntity">
+  <update id="updateUser" parameterType="com.ideavoting.usersapi.infrastructure.mysql.entities.UserJpaEntity">
     UPDATE users
     SET name = #{name},
         login = #{login},
@@ -45,7 +45,7 @@
     WHERE id = #{id}
   </update>
 
-  <select id="getUserByLogin" resultType="jalau.usersapi.infrastructure.mysql.entities.UserJpaEntity">
+  <select id="getUserByLogin" resultType="com.ideavoting.usersapi.infrastructure.mysql.entities.UserJpaEntity">
     SELECT id, name, login, password
     FROM users
     WHERE login = #{login}
