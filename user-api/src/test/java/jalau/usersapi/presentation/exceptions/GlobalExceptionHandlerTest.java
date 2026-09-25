@@ -1,7 +1,7 @@
-package jalau.usersapi.presentation.exceptions;
+package com.ideavoting.usersapi.presentation.exceptions;
 
-import jalau.usersapi.core.exception.InvalidUserDataException;
-import jalau.usersapi.core.exception.UserNotFoundException;
+import com.ideavoting.usersapi.core.exception.InvalidUserDataException;
+import com.ideavoting.usersapi.core.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
