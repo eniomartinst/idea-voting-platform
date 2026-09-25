@@ -1,10 +1,10 @@
-package jalau.usersapi.core.application;
+package com.ideavoting.usersapi.core.application;
 
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.core.domain.repositories.IUserRepository;
-import jalau.usersapi.core.domain.services.IUserCommandService;
-import jalau.usersapi.core.exception.InvalidUserDataException;
-import jalau.usersapi.core.exception.UserNotFoundException;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.core.domain.repositories.IUserRepository;
+import com.ideavoting.usersapi.core.domain.services.IUserCommandService;
+import com.ideavoting.usersapi.core.exception.InvalidUserDataException;
+import com.ideavoting.usersapi.core.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
