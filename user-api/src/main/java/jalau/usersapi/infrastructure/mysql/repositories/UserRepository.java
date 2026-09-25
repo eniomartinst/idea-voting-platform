@@ -1,10 +1,10 @@
-package jalau.usersapi.infrastructure.mysql.repositories;
+package com.ideavoting.usersapi.infrastructure.mysql.repositories;
 
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.core.domain.repositories.IUserRepository;
-import jalau.usersapi.infrastructure.mysql.entities.UserJpaEntity;
-import jalau.usersapi.infrastructure.mysql.mappers.UserPersistenceMapper;
-import jalau.usersapi.infrastructure.mysql.mybatis.UserMyBatisMapper;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.core.domain.repositories.IUserRepository;
+import com.ideavoting.usersapi.infrastructure.mysql.entities.UserJpaEntity;
+import com.ideavoting.usersapi.infrastructure.mysql.mappers.UserPersistenceMapper;
+import com.ideavoting.usersapi.infrastructure.mysql.mybatis.UserMyBatisMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.context.annotation.Profile;
