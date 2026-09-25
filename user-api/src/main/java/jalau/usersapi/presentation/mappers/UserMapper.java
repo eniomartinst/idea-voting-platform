@@ -1,9 +1,9 @@
-package jalau.usersapi.presentation.mappers;
+package com.ideavoting.usersapi.presentation.mappers;
 
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.presentation.dtos.UserCreateDto;
-import jalau.usersapi.presentation.dtos.UserResponseDto;
-import jalau.usersapi.presentation.dtos.UserUpdateDto;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.presentation.dtos.UserCreateDto;
+import com.ideavoting.usersapi.presentation.dtos.UserResponseDto;
+import com.ideavoting.usersapi.presentation.dtos.UserUpdateDto;
 import org.springframework.stereotype.Component;
 
 /**
