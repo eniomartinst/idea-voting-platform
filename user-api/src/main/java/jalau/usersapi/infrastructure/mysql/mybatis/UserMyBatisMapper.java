@@ -1,6 +1,6 @@
-package jalau.usersapi.infrastructure.mysql.mybatis;
+package com.ideavoting.usersapi.infrastructure.mysql.mybatis;
 
-import jalau.usersapi.infrastructure.mysql.entities.UserJpaEntity;
+import com.ideavoting.usersapi.infrastructure.mysql.entities.UserJpaEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
