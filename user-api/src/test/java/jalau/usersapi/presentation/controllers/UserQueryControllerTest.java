@@ -1,9 +1,9 @@
-package jalau.usersapi.presentation.controllers;
+package com.ideavoting.usersapi.presentation.controllers;
 
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.core.domain.services.IUserQueryService;
-import jalau.usersapi.presentation.dtos.UserResponseDto;
-import jalau.usersapi.presentation.mappers.UserMapper;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.core.domain.services.IUserQueryService;
+import com.ideavoting.usersapi.presentation.dtos.UserResponseDto;
+import com.ideavoting.usersapi.presentation.mappers.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,7 +27,7 @@ class UserQueryControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
-    private jalau.usersapi.infrastructure.mysql.mybatis.UserMyBatisMapper userMyBatisMapper;
+    private com.ideavoting.usersapi.infrastructure.mysql.mybatis.UserMyBatisMapper userMyBatisMapper;
 
     @MockitoBean
     private IUserQueryService userQueryService;
