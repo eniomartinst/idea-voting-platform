@@ -1,15 +1,15 @@
-package jalau.usersapi.presentation.controllers;
+package com.ideavoting.usersapi.presentation.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.core.domain.services.IUserCommandService;
-import jalau.usersapi.core.exception.InvalidUserDataException;
-import jalau.usersapi.core.exception.UserNotFoundException;
-import jalau.usersapi.infrastructure.mysql.mybatis.UserMyBatisMapper;
-import jalau.usersapi.presentation.dtos.UserCreateDto;
-import jalau.usersapi.presentation.dtos.UserResponseDto;
-import jalau.usersapi.presentation.dtos.UserUpdateDto;
-import jalau.usersapi.presentation.mappers.UserMapper;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.core.domain.services.IUserCommandService;
+import com.ideavoting.usersapi.core.exception.InvalidUserDataException;
+import com.ideavoting.usersapi.core.exception.UserNotFoundException;
+import com.ideavoting.usersapi.infrastructure.mysql.mybatis.UserMyBatisMapper;
+import com.ideavoting.usersapi.presentation.dtos.UserCreateDto;
+import com.ideavoting.usersapi.presentation.dtos.UserResponseDto;
+import com.ideavoting.usersapi.presentation.dtos.UserUpdateDto;
+import com.ideavoting.usersapi.presentation.mappers.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
