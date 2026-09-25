@@ -1,11 +1,11 @@
-package jalau.usersapi.core.application;
+package com.ideavoting.usersapi.core.application;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.core.domain.repositories.IUserRepository;
-import jalau.usersapi.core.domain.services.IUserQueryService;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.core.domain.repositories.IUserRepository;
+import com.ideavoting.usersapi.core.domain.services.IUserQueryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -48,7 +48,7 @@ public class UserQueryService implements IUserQueryService {
             User user = userRepository.getUser(id);
             if (user == null) {
                 log.error("User not found with ID: {}", id);
-                throw new jalau.usersapi.core.exception.UserNotFoundException("User not found with ID: " + id);
+                throw new com.ideavoting.usersapi.core.exception.UserNotFoundException("User not found with ID: " + id);
             }
             return user;
         });
@@ -60,7 +60,7 @@ public class UserQueryService implements IUserQueryService {
             log.info("Reading user by login");
             User user = userRepository.getUserByLogin(login);
             if (user == null) {
-                throw new jalau.usersapi.core.exception.UserNotFoundException("User not found with login: " + login);
+                throw new com.ideavoting.usersapi.core.exception.UserNotFoundException("User not found with login: " + login);
             }
             return user;
         });
