@@ -1,11 +1,11 @@
-package jalau.usersapi.presentation.controllers;
+package com.ideavoting.usersapi.presentation.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jalau.usersapi.core.domain.entities.Token;
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.core.domain.services.IAuthService;
-import jalau.usersapi.core.exception.InvalidUserException;
-import jalau.usersapi.presentation.dtos.LoginRequest;
+import com.ideavoting.usersapi.core.domain.entities.Token;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.core.domain.services.IAuthService;
+import com.ideavoting.usersapi.core.exception.InvalidUserException;
+import com.ideavoting.usersapi.presentation.dtos.LoginRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -29,7 +29,7 @@ class AuthControllerTest {
     private IAuthService authService;
 
     @MockitoBean
-    private jalau.usersapi.infrastructure.mysql.mybatis.UserMyBatisMapper userMyBatisMapper;
+    private com.ideavoting.usersapi.infrastructure.mysql.mybatis.UserMyBatisMapper userMyBatisMapper;
 
     @Autowired
     private ObjectMapper objectMapper;
