@@ -1,6 +1,6 @@
-package jalau.usersapi.core.domain.services;
+package com.ideavoting.usersapi.core.domain.services;
 
-import jalau.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.core.domain.entities.User;
 
 import java.util.concurrent.CompletableFuture;
 
