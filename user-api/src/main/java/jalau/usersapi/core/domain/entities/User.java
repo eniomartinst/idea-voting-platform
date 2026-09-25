@@ -1,4 +1,4 @@
-package jalau.usersapi.core.domain.entities;
+package com.ideavoting.usersapi.core.domain.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
