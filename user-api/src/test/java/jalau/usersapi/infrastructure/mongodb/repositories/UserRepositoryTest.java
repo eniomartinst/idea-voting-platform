@@ -1,7 +1,7 @@
-package jalau.usersapi.infrastructure.mongodb.repositories;
+package com.ideavoting.usersapi.infrastructure.mongodb.repositories;
 
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.infrastructure.mongodb.entities.UserDocument;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.infrastructure.mongodb.entities.UserDocument;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
