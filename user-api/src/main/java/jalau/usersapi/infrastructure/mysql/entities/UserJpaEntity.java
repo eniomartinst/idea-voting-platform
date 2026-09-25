@@ -1,4 +1,4 @@
-package jalau.usersapi.infrastructure.mysql.entities;
+package com.ideavoting.usersapi.infrastructure.mysql.entities;
 
 import lombok.Data;
 
