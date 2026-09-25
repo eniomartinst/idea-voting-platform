@@ -1,4 +1,4 @@
-package jalau.usersapi.presentation.controllers;
+package com.ideavoting.usersapi.presentation.controllers;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ class HealthQueryControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
-    private jalau.usersapi.infrastructure.mysql.mybatis.UserMyBatisMapper userMyBatisMapper;
+    private com.ideavoting.usersapi.infrastructure.mysql.mybatis.UserMyBatisMapper userMyBatisMapper;
 
     @Test
     void shouldReturn200Ok() throws Exception {
