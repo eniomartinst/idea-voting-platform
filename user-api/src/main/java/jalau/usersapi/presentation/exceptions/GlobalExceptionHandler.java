@@ -1,8 +1,8 @@
-package jalau.usersapi.presentation.exceptions;
+package com.ideavoting.usersapi.presentation.exceptions;
 
-import jalau.usersapi.core.exception.InvalidUserDataException;
-import jalau.usersapi.core.exception.UserNotFoundException;
-import jalau.usersapi.core.exception.InvalidUserException;
+import com.ideavoting.usersapi.core.exception.InvalidUserDataException;
+import com.ideavoting.usersapi.core.exception.UserNotFoundException;
+import com.ideavoting.usersapi.core.exception.InvalidUserException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
