@@ -1,4 +1,4 @@
-package jalau.usersapi.presentation.dtos;
+package com.ideavoting.usersapi.presentation.dtos;
 import lombok.Data;
 
 @Data
