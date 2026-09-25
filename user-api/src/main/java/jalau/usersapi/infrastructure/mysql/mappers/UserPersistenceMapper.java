@@ -1,7 +1,7 @@
-package jalau.usersapi.infrastructure.mysql.mappers;
+package com.ideavoting.usersapi.infrastructure.mysql.mappers;
 
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.infrastructure.mysql.entities.UserJpaEntity;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.infrastructure.mysql.entities.UserJpaEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
