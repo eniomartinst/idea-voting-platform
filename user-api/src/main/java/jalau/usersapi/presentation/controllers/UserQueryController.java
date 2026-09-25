@@ -1,8 +1,8 @@
-package jalau.usersapi.presentation.controllers;
+package com.ideavoting.usersapi.presentation.controllers;
 
-import jalau.usersapi.core.domain.services.IUserQueryService;
-import jalau.usersapi.presentation.dtos.UserResponseDto;
-import jalau.usersapi.presentation.mappers.UserMapper;
+import com.ideavoting.usersapi.core.domain.services.IUserQueryService;
+import com.ideavoting.usersapi.presentation.dtos.UserResponseDto;
+import com.ideavoting.usersapi.presentation.mappers.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
