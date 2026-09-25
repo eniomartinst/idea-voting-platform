@@ -1,7 +1,7 @@
-package jalau.usersapi.infrastructure.security;
+package com.ideavoting.usersapi.infrastructure.security;
 
-import jalau.usersapi.core.domain.entities.Token;
-import jalau.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.core.domain.entities.Token;
+import com.ideavoting.usersapi.core.domain.entities.User;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
