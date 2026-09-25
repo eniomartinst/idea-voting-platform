@@ -1,8 +1,8 @@
-package jalau.usersapi.core.application;
+package com.ideavoting.usersapi.core.application;
 
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.core.domain.repositories.IUserRepository;
-import jalau.usersapi.core.exception.UserNotFoundException;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.core.domain.repositories.IUserRepository;
+import com.ideavoting.usersapi.core.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
