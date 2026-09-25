@@ -1,9 +1,9 @@
-package jalau.usersapi.infrastructure.mysql.repositories;
+package com.ideavoting.usersapi.infrastructure.mysql.repositories;
 
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.infrastructure.mysql.entities.UserJpaEntity;
-import jalau.usersapi.infrastructure.mysql.mappers.UserPersistenceMapper;
-import jalau.usersapi.infrastructure.mysql.mybatis.UserMyBatisMapper;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.infrastructure.mysql.entities.UserJpaEntity;
+import com.ideavoting.usersapi.infrastructure.mysql.mappers.UserPersistenceMapper;
+import com.ideavoting.usersapi.infrastructure.mysql.mybatis.UserMyBatisMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
