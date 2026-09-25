@@ -1,4 +1,4 @@
-package jalau.usersapi.infrastructure.mongodb.entities;
+package com.ideavoting.usersapi.infrastructure.mongodb.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
