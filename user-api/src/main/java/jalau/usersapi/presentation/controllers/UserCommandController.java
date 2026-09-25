@@ -1,12 +1,12 @@
-package jalau.usersapi.presentation.controllers;
+package com.ideavoting.usersapi.presentation.controllers;
 
 import jakarta.validation.Valid;
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.core.domain.services.IUserCommandService;
-import jalau.usersapi.presentation.dtos.UserCreateDto;
-import jalau.usersapi.presentation.dtos.UserResponseDto;
-import jalau.usersapi.presentation.dtos.UserUpdateDto;
-import jalau.usersapi.presentation.mappers.UserMapper;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.core.domain.services.IUserCommandService;
+import com.ideavoting.usersapi.presentation.dtos.UserCreateDto;
+import com.ideavoting.usersapi.presentation.dtos.UserResponseDto;
+import com.ideavoting.usersapi.presentation.dtos.UserUpdateDto;
+import com.ideavoting.usersapi.presentation.mappers.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
