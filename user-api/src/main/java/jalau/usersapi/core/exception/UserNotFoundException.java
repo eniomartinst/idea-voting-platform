@@ -1,4 +1,4 @@
-package jalau.usersapi.core.exception;
+package com.ideavoting.usersapi.core.exception;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(String message) {
