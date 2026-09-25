@@ -1,11 +1,11 @@
-package jalau.usersapi.infrastructure.security;
+package com.ideavoting.usersapi.infrastructure.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import jalau.usersapi.core.domain.entities.Token;
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.core.domain.security.TokenProvider;
+import com.ideavoting.usersapi.core.domain.entities.Token;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.core.domain.security.TokenProvider;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
