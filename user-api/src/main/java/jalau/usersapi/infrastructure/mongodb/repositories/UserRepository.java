@@ -1,8 +1,8 @@
-package jalau.usersapi.infrastructure.mongodb.repositories;
+package com.ideavoting.usersapi.infrastructure.mongodb.repositories;
 
-import jalau.usersapi.core.domain.entities.User;
-import jalau.usersapi.core.domain.repositories.IUserRepository;
-import jalau.usersapi.infrastructure.mongodb.entities.UserDocument;
+import com.ideavoting.usersapi.core.domain.entities.User;
+import com.ideavoting.usersapi.core.domain.repositories.IUserRepository;
+import com.ideavoting.usersapi.infrastructure.mongodb.entities.UserDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
