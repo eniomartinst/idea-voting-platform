@@ -2,8 +2,8 @@
 # This reduces the final image size
 
 # Build stage - compiles the project
-# Image with Maven + Java 21
-FROM maven:3.9.9-eclipse-temurin-21 AS build
+# Image with Maven + Java 19
+FROM maven:3.9.9-eclipse-temurin-19 AS build
 
 WORKDIR /app
 # Copies all project files into the container
@@ -12,8 +12,8 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Run stage - executes the application
-# Lightweight image with only Java 21
-FROM eclipse-temurin:21-jdk
+# Lightweight image with only Java 19
+FROM eclipse-temurin:19-jdk
 
 WORKDIR /app
 # Copies the generated JAR from the build stage
