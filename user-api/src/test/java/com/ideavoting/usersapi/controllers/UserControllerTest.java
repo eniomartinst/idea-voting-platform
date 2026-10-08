@@ -77,13 +77,13 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.name").value("enioteste"));
     }
 
-    // --- Command Tests ---
+
     @Test
     void shouldRespond201WhenCreateIsSuccessful() throws Exception {
         UserCreateDto dto = new UserCreateDto();
         dto.setName("Izac");
-        dto.setLogin("izac_login"); // Campo adicionado
-        dto.setPassword("pwd123");  // Campo adicionado
+        dto.setLogin("izac_login");
+        dto.setPassword("pwd123");
 
         User mappedUser = User.builder().build();
         when(userMapper.toDomainEntity(any(UserCreateDto.class))).thenReturn(mappedUser);
