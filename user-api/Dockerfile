@@ -3,7 +3,7 @@
 
 # Build stage - compiles the project
 # Image with Maven + Java 19
-FROM maven:3.9.9-eclipse-temurin-19 AS build
+FROM maven:3.9.0-eclipse-temurin-19 AS build
 
 WORKDIR /app
 # Copies all project files into the container
